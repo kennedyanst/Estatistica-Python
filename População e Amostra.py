@@ -113,3 +113,18 @@ def amostragem_agrupamento(dataset, numero_grupos):
 df_amostra_agrupamento = amostragem_agrupamento(dataset, 100)
 
 df_amostra_agrupamento.shape
+
+
+# Amostragem estratificada
+
+from sklearn.model_selection import StratifiedShuffleSplit
+
+dataset['income'].value_counts()
+
+split = StratifiedShuffleSplit(test_size = 0.0030)
+for x, y in split.split(dataset, dataset['income']):
+    df_x = dataset.iloc[x]
+    df_y = dataset.iloc[y]
+
+df_x.shape, df_y.shape
+
