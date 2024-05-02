@@ -56,3 +56,60 @@ def amostragem_sistematica(dataset, amostras):
 df_amostra_sistematica = amostragem_sistematica(dataset, 1000)
 
 df_amostra_sistematica.shape
+
+
+# Amostragem por grupos
+
+len(dataset) / 10
+
+grupos = []
+id_grupo = 0
+contagem = 0
+
+for _ in dataset.iterrows():
+    grupos.append(id_grupo)
+    contagem += 1
+    if contagem > 3256:
+        contagem = 0
+        id_grupo += 1
+
+np.unique(grupos, return_counts = True)
+
+np.shape(grupos), dataset.shape
+
+dataset['grupo'] = grupos
+
+dataset.tail()
+
+random.randint(0, 9)
+
+df_agrupamento = dataset[dataset['grupo'] == 5]
+
+df_agrupamento.shape
+
+df_agrupamento['grupo'].value_counts()
+
+# Função de amostragem por grupos
+
+def amostragem_agrupamento(dataset, numero_grupos):
+    intervalo = len(dataset) / numero_grupos
+    
+    grupos = []
+    id_grupo = 0
+    contagem = 0
+
+    for _ in dataset.iterrows():
+        grupos.append(id_grupo)
+        contagem += 1
+        if contagem > intervalo:
+            contagem = 0
+            id_grupo += 1
+
+    dataset['grupo'] = grupos
+    random.seed(1)
+    grupo_selecionado = random.randint(0, numero_grupos)
+    return dataset[dataset['grupo'] == grupo_selecionado]
+
+df_amostra_agrupamento = amostragem_agrupamento(dataset, 100)
+
+df_amostra_agrupamento.shape
