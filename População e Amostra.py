@@ -31,3 +31,28 @@ df_amostra_aleatoria_simples = amostra_aleatoria_simples(dataset, 1000)
 df_amostra_aleatoria_simples.shape
 
 df_amostra_aleatoria_simples.head()
+
+# Amostragem sistemática
+
+dataset.shape
+
+len(dataset) // 1000
+
+random.seed(1)
+random.randint(0, 32561)
+
+np.arange(68, len(dataset), step = 325)
+
+# Função de amostragem sistemática
+
+def amostragem_sistematica(dataset, amostras):
+    intervalo = len(dataset) // amostras
+    random.seed(1)
+    inicio = random.randint(0, intervalo)
+    indices = np.arange(inicio, len(dataset), step = intervalo)
+    amostra_sistematica = dataset.iloc[indices]
+    return amostra_sistematica
+
+df_amostra_sistematica = amostragem_sistematica(dataset, 1000)
+
+df_amostra_sistematica.shape
