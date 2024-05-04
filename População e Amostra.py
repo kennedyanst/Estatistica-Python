@@ -169,3 +169,20 @@ df_amostragem_reservatorio = amostragem_reservatorio(dataset, 1000)
 df_amostragem_reservatorio.shape
 
 df_amostragem_reservatorio.head()
+
+
+# Comparando os métodos de amostragem
+
+dataset['age'].mean()
+
+df_amostra_aleatoria_simples['age'].mean()
+
+df_amostra_sistematica['age'].mean()
+
+df_amostra_agrupamento['age'].mean()
+
+df_amostra_estratificada['age'].mean()
+
+df_amostragem_reservatorio['age'].mean()
+
+# É preciso fazer mais testes (30x no minimo) para ter uma média mais precisa, modificando o random_state.
