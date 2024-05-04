@@ -128,6 +128,16 @@ for x, y in split.split(dataset, dataset['income']):
 
 df_x.shape, df_y.shape
 
+# Função de amostragem estratificada
+
+def amostragem_estratificada(dataset, percentual):
+    split = StratifiedShuffleSplit(test_size = percentual, random_state = 1)
+    for _, y in split.split(dataset, dataset['income']):
+        df_y = dataset.iloc[y]
+    return df_y
+
+df_amostra_estratificada = amostragem_estratificada(dataset, 0.0030)
+
 
 # Amostagem de reservatório
 
