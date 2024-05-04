@@ -186,3 +186,70 @@ df_amostra_estratificada['age'].mean()
 df_amostragem_reservatorio['age'].mean()
 
 # É preciso fazer mais testes (30x no minimo) para ter uma média mais precisa, modificando o random_state.
+
+
+# EXERCICIO 01
+
+data = pd.read_csv('Bases de Dados/credit_data.csv')
+
+data.shape
+
+data.head()
+
+amostra_simples = amostra_aleatoria_simples(data, 1000)
+
+amostra_sistematica = amostragem_sistematica(data, 1000)
+
+amostra_agrupamento = amostragem_agrupamento(data, 2)
+
+def amostragem_estratificada(dataset, percentual, campo):
+    split = StratifiedShuffleSplit(test_size = percentual, random_state = 1)
+    for _, y in split.split(dataset, dataset[campo]):
+        df_y = dataset.iloc[y]
+    return df_y
+amostra_estratificado = amostragem_estratificada(data, 0.5, 'c#default')
+
+amostra_reservatorio = amostragem_reservatorio(data, 1000)
+
+# Comparativo dos resultados
+
+data['age'].mean(), data['income'].mean(), data['loan'].mean()
+
+amostra_simples['age'].mean(), amostra_simples['income'].mean(), amostra_simples['loan'].mean()
+
+amostra_sistematica['age'].mean(), amostra_sistematica['income'].mean(), amostra_sistematica['loan'].mean()
+
+amostra_agrupamento['age'].mean(), amostra_agrupamento['income'].mean(), amostra_agrupamento['loan'].mean()
+
+amostra_estratificado['age'].mean(), amostra_estratificado['income'].mean(), amostra_estratificado['loan'].mean()
+
+amostra_reservatorio['age'].mean(), amostra_reservatorio['income'].mean(), amostra_reservatorio['loan'].mean()
+
+
+# Classificação com Naive Bayes
+
+dataset_2 = pd.read_csv('Bases de Dados/credit_data.csv')
+
+dataset_2.shape
+
+dataset_2.head()
+
+dataset_2.dropna(inplace = True)
+
+dataset_2.shape
+
+import seaborn as sns
+sns.countplot(dataset_2['c#default']);
+
+dataset_2['c#default'].value_counts()
+
+# Base está desbalanceada
+
+X = dataset_2.iloc[:, 1:4].values
+
+X.shape
+
+y = dataset_2.iloc[:, 4].values
+
+y.shape
+
