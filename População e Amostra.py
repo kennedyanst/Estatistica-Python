@@ -253,3 +253,45 @@ y = dataset_2.iloc[:, 4].values
 
 y.shape
 
+# Base de treinamento e teste
+
+from sklearn.model_selection import train_test_split
+
+X_treinamento, X_teste, y_treinamento, y_teste = train_test_split(X, y, test_size = 0.2, stratify = y)
+
+X_treinamento.shape, X_teste.shape
+
+y_treinamento.shape, y_teste.shape
+
+np.unique(y, return_counts=True)
+
+np.unique(y_treinamento, return_counts = True)
+
+np.unique(y_teste, return_counts = True)
+
+# Classificação com Naive Bayes
+
+from sklearn.naive_bayes import GaussianNB
+
+modelo = GaussianNB()
+modelo.fit(X_treinamento, y_treinamento)
+
+previsoes = modelo.predict(X_teste)
+previsoes
+
+y_teste
+
+from sklearn.metrics import accuracy_score, classification_report
+
+accuracy_score(y_teste, previsoes)
+
+print(classification_report(y_teste, previsoes))
+
+from sklearn.metrics import confusion_matrix
+
+cm = confusion_matrix(y_teste, previsoes)
+
+sns.heatmap(cm, annot = True);
+
+
+
