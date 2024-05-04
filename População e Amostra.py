@@ -294,4 +294,6 @@ cm = confusion_matrix(y_teste, previsoes)
 sns.heatmap(cm, annot = True);
 
 
+# Subamostragem (undersampling) - Tomek Links
 
+from imblearn.under_sampling import TomekLinks
