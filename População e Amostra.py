@@ -348,3 +348,78 @@ accuracy_score(y_teste_o, previsoes_o)
 cm_o = confusion_matrix(y_teste_o, previsoes_o)
 
 sns.heatmap(cm_o, annot = True);
+
+
+# EXERCICIO 02
+
+dataset = pd.read_csv("Bases de Dados/csv_result-ebay_confianca_completo.csv")
+
+dataset.shape
+
+dataset.head()
+
+dataset['blacklist'] = dataset['blacklist'] == 'S'
+
+import seaborn as sns
+
+sns.countplot(dataset['reputation']);
+
+len(dataset.columns)
+
+X = dataset.iloc[:, 0:74].values
+
+y = dataset.iloc[:, 74].values
+
+from sklearn.model_selection import train_test_split
+
+X_treinamento, X_teste, y_treinamento, y_teste = train_test_split(X, y, test_size = 0.2, stratify = y)
+
+X_treinamento.shape, X_teste.shape
+
+from sklearn.ensemble import RandomForestClassifier
+
+modelo = RandomForestClassifier()
+modelo.fit(X_treinamento, y_treinamento)
+
+previsoes = modelo.predict(X_teste)
+from sklearn.metrics import accuracy_score, classification_report
+accuracy_score(y_teste, previsoes)
+
+# Subamostragem - Tomek links
+
+from imblearn.under_sampling import TomekLinks
+
+tl = TomekLinks(sampling_strategy='majority')
+
+X_under, y_under = tl.fit_resample(X, y)
+
+X_under.shape, y_under.shape
+
+X_treinamento_u, X_teste_u, y_treinamento_u, y_teste_u = train_test_split(X_under, y_under, test_size = 0.2, stratify = y_under)
+
+modelo_u = RandomForestClassifier()
+modelo_u.fit(X_treinamento_u, y_treinamento_u)
+
+previsoes_u = modelo_u.predict(X_teste_u)
+accuracy_score(y_teste_u, previsoes_u)
+
+# Sobreamostragem - SMOTE
+
+from imblearn.over_sampling import SMOTE
+
+smote = SMOTE(sampling_strategy='minority')
+
+X_over, y_over = smote.fit_resample(X, y)
+
+X_over.shape, y_over.shape
+
+X_treinamento_o, X_teste_o, y_treinamento_o, y_teste_o = train_test_split(X_over, y_over, test_size = 0.2, stratify = y_over)
+
+modelo_o = RandomForestClassifier()
+modelo_o.fit(X_treinamento_o, y_treinamento_o)
+previsoes_o = modelo_o.predict(X_teste_o)
+accuracy_score(y_teste_o, previsoes_o)
+
+# Comparando os resultados
+
+print(classification_report(y_teste, previsoes))
