@@ -297,3 +297,26 @@ sns.heatmap(cm, annot = True);
 # Subamostragem (undersampling) - Tomek Links
 
 from imblearn.under_sampling import TomekLinks
+
+tl = TomekLinks(sampling_strategy='majority')
+
+X_under, y_under = tl.fit_resample(X, y)
+
+X_under.shape, y_under.shape
+
+np.unique(y, return_counts=True)
+
+np.unique(y_under, return_counts=True)
+
+X_treinamento_u, X_teste_u, y_treinamento_u, y_teste_u = train_test_split(X_under, y_under, test_size = 0.2, stratify = y_under)
+
+X_treinamento_u.shape, X_teste_u.shape
+
+modelo_u = GaussianNB()
+modelo_u.fit(X_treinamento_u, y_treinamento_u)
+previsoes_u = modelo_u.predict(X_teste_u)
+accuracy_score(y_teste_u, previsoes_u)
+
+cm_u = confusion_matrix(y_teste_u, previsoes_u)
+
+sns.heatmap(cm_u, annot = True);
