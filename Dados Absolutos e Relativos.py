@@ -17,4 +17,15 @@ df['%_florida'] = (df['florida'] / df['florida'].sum()) * 100
 
 df
 
- 
+
+# Exercicio 1
+
+dataset = pd.read_csv('Bases de dados/census.csv')
+
+dataset2 = dataset[['income', 'education']]
+
+dataset3 = dataset2.groupby(['education', 'income'])['education'].count()
+
+dataset3
+
+dataset3.index
