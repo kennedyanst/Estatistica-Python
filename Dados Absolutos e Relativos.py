@@ -29,3 +29,20 @@ dataset3 = dataset2.groupby(['education', 'income'])['education'].count()
 dataset3
 
 dataset3.index
+
+
+# Exercicio coeficientes de taxas
+
+dados = {'ano': ['1', '2', '3', '4', 'total'],
+         'matriculas_marco': [70, 50, 47, 23, 190],
+         'matriculas_novembro': [65, 48, 40, 22, 175]
+         }
+
+dados
+
+dataset = pd.DataFrame(dados)
+dataset
+
+dataset['taxa_evasao'] = ((dataset['matriculas_marco'] - dataset['matriculas_novembro']) / dataset['matriculas_marco']) * 100
+
+dataset
