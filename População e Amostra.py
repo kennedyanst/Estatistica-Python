@@ -320,3 +320,31 @@ accuracy_score(y_teste_u, previsoes_u)
 cm_u = confusion_matrix(y_teste_u, previsoes_u)
 
 sns.heatmap(cm_u, annot = True);
+
+
+# Sobreamostragem (oversampling) - SMOTE
+
+from imblearn.over_sampling import SMOTE
+
+smote = SMOTE(sampling_strategy='minority')
+
+X_over, y_over = smote.fit_resample(X, y)
+
+X_over.shape, y_over.shape
+
+np.unique(y, return_counts=True)
+
+np.unique(y_over, return_counts=True)
+
+X_treinamento_o, X_teste_o, y_treinamento_o, y_teste_o = train_test_split(X_over, y_over, test_size = 0.2, stratify = y_over)
+
+X_treinamento_o.shape, X_teste_o.shape
+
+modelo_o = GaussianNB()
+modelo_o.fit(X_treinamento_o, y_treinamento_o)
+previsoes_o = modelo_o.predict(X_teste_o)
+accuracy_score(y_teste_o, previsoes_o)
+
+cm_o = confusion_matrix(y_teste_o, previsoes_o)
+
+sns.heatmap(cm_o, annot = True);
