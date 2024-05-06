@@ -79,3 +79,20 @@ plt.xlabel('intervalos')
 plt.ylabel('Frequência')
 
 plt.show()
+
+# Distribuição de Frequência com Pandas
+
+frequencia, classes = np.histogram(dados)
+
+frequencia
+
+plt.hist(dados, bins = classes);
+
+frequencia, classes = np.histogram(dados, bins = 5)
+
+plt.hist(dados, bins = classes);
+
+frequencia, classes = np.histogram(dados, bins = 'sturges')
+
+plt.hist(dados, bins = classes);
+
