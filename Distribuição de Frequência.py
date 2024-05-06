@@ -121,3 +121,31 @@ dataset['Faixa-Etária'] = pd.cut(dataset['age'], bins=[0, 17, 25, 40, 60, 90], 
 
 dataset.head()
 
+
+# Regra de associação
+
+dataset_apriori = dataset[['age','workclass', 'education', 'sex', 'marital-status', 'occupation', 'relationship', 'native-country', 'income']]
+
+dataset_apriori.head()
+
+dataset_apriori.shape
+
+dataset_apriori = dataset_apriori.sample(n = 1000)
+dataset_apriori.shape
+
+transacoes = []
+
+for i in range(dataset_apriori.shape[0]):
+    transacoes.append([str(dataset_apriori.values[i, j]) for j in range(dataset_apriori.shape[1])])
+
+    transacoes[:2]
+
+from apyori import apriori
+
+regras = apriori(transacoes, min_support = 0.3, min_confidence = 0.2)
+
+resultados = list(regras)
+
+len(resultados)
+
+resultados
