@@ -80,7 +80,7 @@ plt.ylabel('Frequência')
 
 plt.show()
 
-# Distribuição de Frequência com Pandas
+# Distribuição de Frequência com Matplotlib
 
 frequencia, classes = np.histogram(dados)
 
@@ -95,4 +95,15 @@ plt.hist(dados, bins = classes);
 frequencia, classes = np.histogram(dados, bins = 'sturges')
 
 plt.hist(dados, bins = classes);
+
+
+# Distribuição de Frequência com Pandas
+
+dataset = pd.DataFrame({'dados': dados})
+
+dataset.plot.hist();
+
+sns.displot(dados, kde = True);
+
+
 
