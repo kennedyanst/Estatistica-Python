@@ -93,3 +93,44 @@ grafico = FeatureCorrelation(labels = dataset.columns[1:])
 grafico.fit(dataset.iloc[:,1:16].values, dataset.iloc[:, 0].values)
 grafico.show();
 
+
+# Regressão Linear Simples
+
+dataset = pd.read_csv('Bases de dados/house_prices.csv')
+
+dataset.drop(labels=['id', 'date'], axis = 1, inplace = True)
+
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots(figsize=(15,15))
+ax = sns.heatmap(dataset.corr(), annot=True)
+
+X = dataset['sqft_living'].values
+
+x = X.reshape(-1, 1)
+
+y = dataset['price'].values
+
+from sklearn.model_selection import train_test_split
+
+x_treino, x_teste, y_treino, y_teste = train_test_split(x, y, test_size = 0.2, random_state=1)
+
+from sklearn.linear_model import LinearRegression
+
+regressor = LinearRegression()
+
+regressor.fit(x_treino, y_treino)
+
+previsoes = regressor.predict(x_teste)
+
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+
+mae = mean_absolute_error(y_teste, previsoes)
+
+import matplotlib.pyplot as plt
+plt.scatter(x, y)
+plt.plot(x, regressor.predict(x), color = 'red')
+
+regressor.score(x_treino, y_treino)
+
+regressor.score(x_teste, y_teste)
+
