@@ -85,4 +85,11 @@ ax = sns.heatmap(dataset.corr(), annot=True)
 
 # Correlação com Yellowbrick
 
-import yellowbrick
+from yellowbrick.target import FeatureCorrelation
+
+dataset.columns[1:]
+
+grafico = FeatureCorrelation(labels = dataset.columns[1:])
+grafico.fit(dataset.iloc[:,1:16].values, dataset.iloc[:, 0].values)
+grafico.show();
+
