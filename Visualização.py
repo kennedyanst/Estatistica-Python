@@ -68,3 +68,38 @@ g.map(sns.scatterplot)
 g = sns.PairGrid(dataset2)
 g.map_diag(sns.histplot)
 g.map_offdiag(sns.scatterplot)
+
+import pandas as pd
+from mpl_toolkits.basemap import Basemap
+
+dataset = pd.read_csv('Bases de dados/house_prices.csv')
+
+dataset['lat'].describe()
+dataset['long'].describe()
+
+lat1, lat2 = dataset['lat'].min(), dataset['lat'].max()
+long1, long2 = dataset['long'].min(), dataset['long'].max()
+
+import matplotlib.pyplot as plt
+
+dataset = dataset.sort_values(by = 'price', ascending=True)
+
+
+dataset_caros = dataset.iloc[0:-1000]
+dataset_baratos = dataset.iloc[0:1000]
+
+plt.figure(figsize=(10, 10))
+m = Basemap(projection='cyl', resolution='h',
+            llcrnrlat=lat1, urcrnrlat=lat2, 
+            llcrnrlon=long1, urcrnrlon=long2
+            )
+
+m.drawcoastlines()
+m.fillcontinents(color = 'palegoldenrod', lake_color='lightskyblue')
+m.drawmapboundary(fill_color='lightskyblue')
+m.scatter(dataset['long'], dataset['lat'], s= 5, c='green', alpha=0.1, zorder=2)
+m.scatter(dataset_caros['long'], dataset_caros['lat'], s= 10, c='red', alpha=0.1, zorder=3)
+m.scatter(dataset_baratos['long'], dataset_baratos['lat'], s= 10, c='blue', alpha=0.1, zorder=3)
+
+m.scatter(dataset_caros['long'], dataset_caros['lat'], s= 10, c='red', alpha=0.1, zorder=3)
+m.scatter(dataset_baratos['long'], dataset_baratos['lat'], s= 10, c='blue', alpha=0.1, zorder=3)
